@@ -394,7 +394,7 @@ struct obs_core {
 
 extern struct obs_core *obs;
 
-extern void *obs_video_thread(void *param);
+extern void *obs_graphics_thread(void *param);
 
 extern gs_effect_t *obs_load_effect(gs_effect_t **effect, const char *file);
 
@@ -610,6 +610,7 @@ struct obs_source {
 	bool                            async_active;
 	bool                            async_update_texture;
 	bool                            async_unbuffered;
+	bool                            async_decoupled;
 	struct obs_source_frame         *async_preload_frame;
 	DARRAY(struct async_frame)      async_cache;
 	DARRAY(struct obs_source_frame*)async_frames;

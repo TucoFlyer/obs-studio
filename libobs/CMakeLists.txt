@@ -12,10 +12,14 @@ if (NOT "${FFMPEG_AVCODEC_LIBRARIES}" STREQUAL "")
 endif()
 
 if(UNIX)
-	find_package(PulseAudio)
-	if (NOT "${PULSEAUDIO_LIBRARY}" STREQUAL "")
-		message(STATUS "Found PulseAudio - Audio Monitor enabled")
-		set(HAVE_PULSEAUDIO "1")
+	if (NOT APPLE)
+		find_package(PulseAudio)
+		if (NOT "${PULSEAUDIO_LIBRARY}" STREQUAL "")
+			message(STATUS "Found PulseAudio - Audio Monitor enabled")
+			set(HAVE_PULSEAUDIO "1")
+		else()
+			set(HAVE_PULSEAUDIO "0")
+		endif()
 	else()
 		set(HAVE_PULSEAUDIO "0")
 	endif()
@@ -79,6 +83,7 @@ if(WIN32)
 		util/platform-windows.c)
 	set(libobs_PLATFORM_HEADERS
 		util/threading-windows.h
+		util/windows/win-registry.h
 		util/windows/win-version.h
 		util/windows/ComPtr.hpp
 		util/windows/CoTaskMemPtr.hpp
